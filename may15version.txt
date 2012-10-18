@@ -1,0 +1,43 @@
+1.I'll show you through a bit of prolog code, then talk about why the paradigm's interesting.
+
+Learning a 'weird' language teaches you more than learning a similar one. Prolog's got the cake for weird.
+Prolog is the only commonly used logic programming language.
+
+2. BRIEF intro to 
+capitals start variables
+lowercase starts atoms
+unification, resolution, and backtracking.
+Trace into cannibals2nocomment, quickly to canoeCarries
+
+
+Nondeterminism
+   - reduces code size
+   - input and output aren't fixed, vastly reducing API size
+         (consider append, which is also prefix, suffix, and member)
+   - declarative code can just define the problem, not define the steps needed to reach it.
+   - has-a and has-many are the same thing.
+   - error handling 'built in'
+   - lack of control structures encourage metaprogramming
+   - Partial structures, generate and test
+
+Knowledge and facts - Knowledge lets us:
+   - handle complexly structured data, data with exceptions, general rules.
+   -schemaless DB is effectively a base type.
+   - structure data as you go
+   - code isn't just convertable to data, code IS data.
+   - case based reasoning reduces coupling.
+   - 'family tree' type reasoning is powerful for real world tasks too.
+
+matching based calls
+   - Closer to a true abstract type system than multimethods
+   - radical destructuring, 'coding in the head'
+   - passing structured data means not needing to know format everywhere.
+   - post object world.
+
+good data types
+    - structure-as-you-go data is a type, like lisp.
+    - String and StringBuffer without the pain
+
+parsing as a fundamental operation
+   - death to XML
+   - we don't need regex's
