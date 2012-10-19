@@ -30,11 +30,13 @@ Implementation of tic tac toe
  The birds example from the 'expert systems in Prolog' tutorial
  by Amzi (on the web)
  
-### cannibals2nocomments.pl
+### cannibals2.pl
  
  A well commented example of the cannibals/missionaries problem
  
  This was used as an example for a talk whose notes are in may15version.txt
+ 
+ cannibals2nocomments.pl has fewer comments, but has some additional capabilities
  
 ### emoticons.pl 
  
