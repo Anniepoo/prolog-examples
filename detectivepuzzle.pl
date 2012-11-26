@@ -24,6 +24,7 @@
 %  a,b, and c are Art, Burt, and Carl
 %  W is the current list of witnesses
 %
+%BUGS: this has some bug
 
 %
 % Express the testimony of each witness as facts

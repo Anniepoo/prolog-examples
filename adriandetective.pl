@@ -1,4 +1,9 @@
-
+%
+% This is in many ways a better solution to the detective puzzle
+% See detectivepuzzle.pl for a problem explanation
+%
+% This was written by Adrian King
+%
 murderer(X) :- bagof(Y,contradictsPerson(X,Y),Ys), length(Ys,N), N > 1.
 
 contradictsPerson(A,B) :-

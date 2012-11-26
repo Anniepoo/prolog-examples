@@ -1,5 +1,9 @@
 :- module(birds, [solve/0]).
-
+%
+% Start of an implementation of the code at
+% http://www.amzi.com/ExpertSystemsInProlog/
+%
+%
 :- dynamic
 	known/3,
 	voice/1,
