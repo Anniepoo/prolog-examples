@@ -5,8 +5,8 @@
 :- use_module(library(http/html_write)).
 :- use_module(library(settings)).
 
-:- setting(key, atom, 'AIzaSyD2BfdFtyGXcVtACmZ4tbmGLoUDV-m20RI',
-	   'Google map key.  "abcdefg" works for localhost').
+:- setting(key, atom, 'abcdefg',
+	   'Google map key.  Jan sez "abcdefg" works for localhost (didn\'t for me)').
 :- setting(script, atom, 'http://maps.google.com/maps?file=api&v=2&sensor=false',
 	   'Address of Google map script').
 
