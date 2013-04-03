@@ -36,7 +36,7 @@ make_best_plan(Goal, Situation, BestPlan) :-
                      plan_quality(Plan,Quality) ),
                 RankedPlans),
         sort(RankedPlans, OrderedPlans),
-        last(_-BestPlan, OrderedPlans).
+        last(OrderedPlans, _-BestPlan).
 
 plan_quality(Plan, Quality) :-
         length(Plan, Length),                                 % lose 10 points per step
@@ -150,11 +150,6 @@ remove(A, [A|B], B).
 remove(A, [C|B], [C|NewB]) :-
         remove(A, B, NewB).
 
-member(X, [X|_]).
-member(X, [_|Y]) :- member(X, Y).
-
-memberchk(X, Y) :- member(X, Y), !.
-
 subset([], _).
 subset([X|Xs], Ys) :- remove(X, Ys, RestYs), subset(Xs, RestYs).
 
@@ -165,10 +160,6 @@ nmember(Elem, [Elem|_], N, N).
 nmember(Elem, [_|List], NSoFar, N) :-
         NewN is NSoFar + 1,
         nmember(Elem, List, NewN, N).
-
-last(X, [X]).
-last(A, [_,C|D]) :-
-        last(A, [C|D]).
 
 % ---------- Randomization utilities
 
@@ -183,20 +174,6 @@ rnd_member(X, Xs) :-
         N is integer(R*L) + 1,
         nmember(X, Xs, N), !.
 
-/*
-random(R) :-
-        lastrnd(N), rnd_number(N,R), retract(lastrnd(N)), NewN is N + 1,
-        ( NewN >= 20 -> assert(lastrnd(0)) ; assert(lastrnd(NewN)) ).
-
-
-rnd_number( 0,0.174232). rnd_number( 1,0.186011). rnd_number( 2,0.951800).
-rnd_number( 3,0.363587). rnd_number( 4,0.108449). rnd_number( 5,0.848878).
-rnd_number( 6,0.309133). rnd_number( 7,0.230964). rnd_number( 8,0.639224).
-rnd_number( 9,0.686739). rnd_number(10,0.781066). rnd_number(11,0.983691).
-rnd_number(12,0.704568). rnd_number(13,0.636376). rnd_number(14,0.881027).
-rnd_number(15,0.194111). rnd_number(16,0.449212). rnd_number(17,0.110336).
-rnd_number(18,0.572139). rnd_number(19,0.149503).
-*/
 % ======================================================================
 %               THE FLIGHT INCIDENT KNOWLEDGE BASE
 % ======================================================================
