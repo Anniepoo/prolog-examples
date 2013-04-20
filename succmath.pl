@@ -14,3 +14,7 @@ amult(s(X), Y, Z) :-
 	amult(X , Y , W),
 	sum(Y, W, Z).
 
+factorial(zero,s(zero)).
+factorial(s(X),Y):-
+	amult(s(X),Y2,Y),
+	factorial(X,Y2).

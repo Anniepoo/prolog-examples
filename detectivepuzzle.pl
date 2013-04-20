@@ -83,7 +83,7 @@ consistent(Witness , [QQ|Theory]) :-
 
 
 
-% murderer(?M, +Questions, ?Theory)
+% murderer(?M, ?Theory)
 %  resolves if M is the murderer under Theory Theory
 %  where M is the atom name of the murderer
 %  Theory is a list of answers of the form question(person, value)
