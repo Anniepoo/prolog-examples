@@ -1,6 +1,31 @@
 %
 % This is in many ways a better solution to the detective puzzle
-% See detectivepuzzle.pl for a problem explanation
+
+%
+%  You are a detective trying to solve a murder case
+%  There are three suspects - Art, Burt, and Carl
+%  They are also the only three witnesses
+%
+%  Here's their statements:
+%  Art:
+%  Burt was the victim's friend, but the victim and carl were deadly
+%  enemies.
+%
+%  Burt:
+%  I was out of town when it happened, and on top of that I didn't even
+%  know the guy.
+%
+%  Carl:
+%  I'm innocent. I don't know who did it. I saw Art and Burt driving
+%  around town then.
+%
+%  Determine who is lying.
+%
+% M is the murderer
+%  a,b, and c are Art, Burt, and Carl
+%  W is the current list of witnesses
+%
+
 %
 % This was written by Adrian King
 %
