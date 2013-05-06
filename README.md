@@ -13,8 +13,11 @@ She's interrogated three witnesses to a murder, all of whom are also suspects.
 The problem is to determine which of the suspect's testimony is
 inconsistent with the others.
 
- * detectivepuzzle.pl
- * adriandetective.pl
+ * detectivepuzzle.pl - My original solution, written when I was new to Prolog. 
+It now feels very 'imperative'
+ * newdetective.pl - I recently rewrote it
+ * adriandetective.pl - Adrian King's solution
+
 
 ### talespin2.pl
 
@@ -38,6 +41,10 @@ Implementation of tic tac toe
  
  cannibals2nocomments.pl has fewer comments, but has some additional capabilities
  
+### cuttutorial.pl
+
+A little story analogy to help understand cut and cut, fail
+
 ### emoticons.pl 
  
  A joke. I'm known for my happy array of 'smiley' emoticons. Sometimes others
