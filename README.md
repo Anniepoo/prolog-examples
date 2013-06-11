@@ -79,5 +79,11 @@ A little story analogy to help understand cut and cut, fail
  
  Solves a Sudoku puzzle by CLPFD
 
+### loops.pl
 
+ Demo of various ways to do in Prolog what you'd do with loops in
+ an imperative language.
+ 
+ 
+ 
 
