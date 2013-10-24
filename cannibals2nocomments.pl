@@ -17,26 +17,26 @@ start(config(3, 3, 0, 0)).
 
 % convenience method for testing
 go :- start(Config),
-    crossRiver(Config, Moves),
-    showsolution(Config, Moves).
+    moves_to_cross(Config, Moves),
+    show_solution(Config, Moves).
 
-numWays(N) :-
+count_number_of_ways_to_cross(N) :-
 	start(Config),
-	setof(Moves, crossRiver(Config, Moves), Moveset), length(Moveset, N).
+	setof(Moves, moves_to_cross(Config, Moves), Moveset), length(Moveset, N).
 
-showunique :-
+show_unique_solutions :-
 	start(Config),
-	setof(Moves, crossRiver(Config, Moves), UniqueMoves),
+	setof(Moves, moves_to_cross(Config, Moves), UniqueMoves),
 	member(AMove, UniqueMoves),
 	format('======== Solution ===========~n'),
-	showsolution(Config, AMove),
+	show_solution(Config, AMove),
 	fail.
 
-showshort :-
+show_shortest_solution :-
 	start(Config),
-	setof(Moves, crossRiver(Config, Moves), UniqueMoves),
+	setof(Moves, moves_to_cross(Config, Moves), UniqueMoves),
 	shortest(9999, UniqueMoves , [], Short),
-	showsolution(Config, Short).
+	show_solution(Config, Short).
 
 shortest(_, [], In, In).
 
@@ -51,35 +51,35 @@ shortest(InLen, [H|T], In, Out) :-
 	shortest(InLen, T , In, Out).
 
 
-% canoeCarries( ?CannibalsInCanoe, ?MissionariesInCanoe)
+% canoe_carries_c_m( ?CannibalsInCanoe, ?MissionariesInCanoe)
 % can the canoe carry C cannibals and M missionaries?
-canoeCarries(C,M) :-
-	canoeCarries(C,M,2).
+canoe_carries_c_m(C,M) :-
+	canoe_carries_c_m(C,M,2).
 
-% canoeCarries( ?CannibalsInCanoe, ?MissionariesInCanoe)
+% canoe_carries_c_m( ?CannibalsInCanoe, ?MissionariesInCanoe)
  /*
-canoeCarries(1,0).
-canoeCarries(0,1).
-canoeCarries(1,1).
-canoeCarries(2,0).
-canoeCarries(0,2).
+canoe_carries_c_m(1,0).
+canoe_carries_c_m(0,1).
+canoe_carries_c_m(1,1).
+canoe_carries_c_m(2,0).
+canoe_carries_c_m(0,2).
 */
 
-% canoeCarries ( ?CannibalsInCanoe, ?MissionariesInCanoe,
+% canoe_carries_c_m ( ?CannibalsInCanoe, ?MissionariesInCanoe,
 % +CanoeCapacity)
 
-canoeCarries(C,M,Capacity) :-
+canoe_carries_c_m(C,M,Capacity) :-
 	between(0,Capacity,C),
 	between(0,Capacity,M),
 	(M = 0 ; C =< M),
 	Total is C + M,
 	between(1,Capacity, Total).
 
-crossRiver(config(LC, LM, RC, RM), Moves) :-
-    crossRiver(-1, LC, LM, RC, RM, [canoe(-1, LC, LM)], [], Complete),
+moves_to_cross(config(LC, LM, RC, RM), Moves) :-
+    moves_to_cross(-1, LC, LM, RC, RM, [canoe(-1, LC, LM)], [], Complete),
     reverse(Complete , Moves).
 
-% crossRiver(
+% moves_to_cross(
 %           +Bank,   -1 canoe is on left bank 1 canoe is on right bank
 %           +CannibalsOnLeftBank,
 %           +MissionariesOnLeftBank,
@@ -98,10 +98,10 @@ crossRiver(config(LC, LM, RC, RM), Moves) :-
 %	    -CompleteList) - the complete solution in the same format
 %		  as List
 
-crossRiver(_, 0, 0, _, _, _, List, List).
+moves_to_cross(_, 0, 0, _, _, _, List, List).
 
-crossRiver(Bank, LC,LM,RC,RM, Visited, List, CompleteList) :-
-	canoeCarries(DC, DM),
+moves_to_cross(Bank, LC,LM,RC,RM, Visited, List, CompleteList) :-
+	canoe_carries_c_m(DC, DM),
 
 	NLM is (LM + Bank * DM),
 	NRM is RM - Bank * DM,
@@ -119,12 +119,12 @@ crossRiver(Bank, LC,LM,RC,RM, Visited, List, CompleteList) :-
 	NBank is Bank * -1,
 	\+ memberchk(canoe(NBank, NLC, NLM) , Visited),
 
-	crossRiver(NBank ,
+	moves_to_cross(NBank ,
 		  NLC, NLM, NRC, NRM,
 		  [canoe(NBank, NLC, NLM) | Visited],
 		  [go(NBank, DC, DM) |List], CompleteList).
 
-% showsolution(
+% show_solution(
 %        at start we have:
 %      +CannibalsOnLeftBank,
 %      +MissionariesOnLeftBank,
@@ -132,8 +132,8 @@ crossRiver(Bank, LC,LM,RC,RM, Visited, List, CompleteList) :-
 %      +MissionariesOnRightBank,
 %      +List)  list of moves to print
 
-showsolution(_, []).
-showsolution(config(C, M, RC, RM), [go(-1, DC, DM)|Sol]) :-
+show_solution(_, []).
+show_solution(config(C, M, RC, RM), [go(-1, DC, DM)|Sol]) :-
 	format('~d,~d   \\_______/   ~d,~d~n',
 	       [C, M, RC, RM]),
 	format('	<-(~d,~d)--~n' , [DC, DM]),
@@ -141,9 +141,9 @@ showsolution(config(C, M, RC, RM), [go(-1, DC, DM)|Sol]) :-
 	NLM is M + DM,
 	NRC is RC - DC,
 	NRM is RM - DM,
-	showsolution(config(NLC, NLM, NRC, NRM), Sol).
+	show_solution(config(NLC, NLM, NRC, NRM), Sol).
 
-showsolution(config(C, M, RC, RM), [go(1, DC, DM)|Sol]) :-
+show_solution(config(C, M, RC, RM), [go(1, DC, DM)|Sol]) :-
 	format('~d,~d   \\_______/   ~d,~d~n',
 	       [C,M,RC,RM]),
 	format('       --(~d,~d)->~n' , [DC, DM]),
@@ -151,7 +151,7 @@ showsolution(config(C, M, RC, RM), [go(1, DC, DM)|Sol]) :-
 	NLM is M - DM,
 	NRC is RC + DC,
 	NRM is RM + DM,
-	showsolution(config(NLC, NLM, NRC, NRM), Sol).
+	show_solution(config(NLC, NLM, NRC, NRM), Sol).
 
 
 
