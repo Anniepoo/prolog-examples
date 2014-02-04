@@ -1,9 +1,9 @@
 :- discontiguous male/1, female/1, parent/2.
+male(dicky).
 male(randy).
 male(mike).
 male(don).
 male(elmer).
-male(dicky).
 female(anne).
 female(rosie).
 female(esther).
