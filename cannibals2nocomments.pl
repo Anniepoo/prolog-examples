@@ -4,11 +4,15 @@
 %  on the banks of a river, and a canoe that can carry 2 people,
 %  move everyone to the right bank of the river
 %
-%  Notational convention - in many places I've used variables
-%  like NLM, LC, etc. L and R are the left and right banks,
+%  the missionaries don't really trust the cannibals, and so want to
+%  plan it so there's never more cannibals than missionaries on one side
+%  of the river
+%
+%  Notational convention - in many places I've used
+%  variables like NLM, LC, etc. L and R are the left and right banks,
 %  respectively, while M and C are, predictably, missionaries and
-%  cannibals. N is the semi-standard prefix denoting the new value
-%  of a variable.
+%  cannibals. N is the semi-standard prefix denoting the new value of a
+%  variable.
 
 % abstract the starting conditions
 % start(-LC, -LM, -RC, -RM).
@@ -22,7 +26,8 @@ go :- start(Config),
 
 count_number_of_ways_to_cross(N) :-
 	start(Config),
-	setof(Moves, moves_to_cross(Config, Moves), Moveset), length(Moveset, N).
+	setof(Moves, moves_to_cross(Config, Moves), Moveset),
+	length(Moveset, N).
 
 show_unique_solutions :-
 	start(Config),
@@ -103,7 +108,7 @@ moves_to_cross(_, 0, 0, _, _, _, List, List).
 moves_to_cross(Bank, LC,LM,RC,RM, Visited, List, CompleteList) :-
 	canoe_carries_c_m(DC, DM),
 
-	NLM is (LM + Bank * DM),
+	NLM is LM + Bank * DM,
 	NRM is RM - Bank * DM,
 	NLC is LC + Bank * DC,
 	NRC is RC - Bank * DC,
