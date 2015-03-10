@@ -45,6 +45,7 @@ meaning(hat, ")&$#|", "Carmen Miranda Hat").
 meaning(hat, "<", "Dunce cap, pointed head, or thinking cap").
 meaning(hat, ">", "Antenna").
 meaning(hat, "=", "hair standing on end").
+meaning(hat, "L", "combover").
 meaning(hat, "", "").
 meaning(eyebrows, ">", "inner eyebrows down, expressing worry or consternation").
 meaning(eyebrows, "|", "eyebrows corrugated, expressing sternness").
@@ -61,6 +62,7 @@ meaning(nose, "C", "big nose").
 meaning(nose, "c:", "button nose").
 meaning(nose, [X], "non annie nose, reference to others") :-
 	member(X, "2^o-uUOvV>").
+meaning(nose, "", "no nose").
 meaning(mouth, "*", "kissing").
 meaning(mouth, "+", "puckered mouth").
 meaning(mouth, "(", "sad").
