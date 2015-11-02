@@ -3,11 +3,11 @@
 % by means of a little story
 %
 % This isn't the whole story of cuts. It just tries to help you 'grok'
-% what cut and cut,fail do.
+% what cut does and what cut fails to do.
 
 %
 % You're a non fiction writer researching an event that happened in a
-% park in the small town of Littletown several decades ago, the
+% park in the small town of Littletown several decades ago: the
 % invention of the flying toaster.
 %
 % You've gotten a chance to drive to Littletown for a couple days of
@@ -15,13 +15,13 @@
 % Now you want to find 'the park'. The existing accounts are pretty
 % vague about where it is.
 % Driving around you don't see anything that's obviously 'the park'
-% but find several spots htat might be 'the park' - a vacent lot,
+% but find several spots that might be 'the park' - a vacant lot,
 % the wide lawns around the city hall, etc.
 %
-% Lets model the process of finding 'the park'
+% Let's model the process of finding 'the park'.
 
-%  some locations
-%  the first clause means city_hall is a location
+%  Some locations
+%  The first clause means city_hall is a location.
 location(city_hall).
 location(vacant_lot).
 location(old_mill).
@@ -29,7 +29,7 @@ location(field).
 location(barber_shop).
 
 %
-% places that are flat and grassy might be 'the park'
+% Places that are flat and grassy might be 'the park'.
 
 flat(city_hall).
 flat(vacant_lot).
@@ -47,10 +47,8 @@ possibly_park(X) :-
 	grassy(X).
 
 %
-% Now you can query where the park might be
-% query
-%
-% ?- possibly_park(X).
+% Now you can query where the park might be like so:
+% 	?- possibly_park(X).
 % and you get some possible locations.
 
 %
@@ -58,13 +56,13 @@ possibly_park(X) :-
 % with swing sets, picnic tables, barbeque grills,
 % and a big sign that says 'Littletown Park. On this
 % site the flying toaster was invented in 1987 by
-% A Random Programmer
+% A Random Programmer.
 %
-% obviously after you find this, 'the park' isn't
-% the vacant lot or city hall
-%lets make a new query that handles this
+% After you find this, it's obvious that 'the park' isn't
+% the vacant lot or city hall.
+% Let's make a new query that handles this.
 %
-% we'll define someplace as definitely the park
+% We'll define someplace as definitely the park.
 definitely_park(littletown_park).
 
 % and make a query that finds a set of best answers
@@ -82,21 +80,21 @@ park(X) :-
 	possibly_park(X).
 
 %
-% Query
-% ?- park(X)
-% and see that there's only one answer. Comment out
+% Run this query:
+% 	?- park(X).
+% and you'll see that there's only one answer. Comment out
 % the definitely_park fact and you'll see all the possibles.
 
 
 %
 % Great - so, lets change the story again.
-% instead of finding whats definitely the park
-% you get tired of driving around, and stop in a store
-% to ask if they know where 'the park' is.
+% Instead of finding (what is definitely) the park, 
+% you get tired of driving around and stop at a store
+% to ask for directions to the park. 
 % The fellow in the store says that they used the park land to
-% build the new city auditorium in 1995
+% build a new city auditorium in 1995.
 %
-% so lets build a park2 that handles this situation
+% So let's build a park2 that handles this situation.
 
 park_gone.
 
@@ -114,10 +112,10 @@ park2(X) :-
 park2(X) :-
 	possibly_park(X).
 
-% query
-% ?- park2(X).
+% Run the query:
+% 	?- park2(X).
 %
-% and get false. Comment out park_gone. and get littletown_park.
-% comment out definitely_park and get the possibles.
+% and you get false. Comment out park_gone, and you get littletown_park.
+% If you comment out definitely_park, you'll get all the possibles.
 %
 
