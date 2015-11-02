@@ -3,7 +3,7 @@
 % by means of a little story
 %
 % This isn't the whole story of cuts. It just tries to help you 'grok'
-% what cut does and what cut fails to do.
+% what 'cut' does, and what 'cut, fail' does. 
 
 %
 % You're a non fiction writer researching an event that happened in a
