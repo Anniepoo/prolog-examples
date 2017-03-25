@@ -24,9 +24,9 @@ get_cell_by_name(X) :-
 	% it's actually the name of the open document, so no path
 	%
 	% and humma is the workbook
-	open_dde_conversation('Excel', '[example.xlsx]humma', C),
+	open_dde_conversation('Excel', '[example.xlsx]Sheet1', C),
 	% now we ask for a row/col cell
-	dde_request(C, 'R3C1', X),
+	dde_request(C, onions, X),
 	close_dde_conversation(C).
 
 % we can get a range of cells just by asking for a reference
@@ -71,7 +71,8 @@ flags_server :-
 	    % set our service name and topi name,
 	    % get our Item name and return our value in V
 	    prolog(current_prolog_flag, Item, V),
-	    current_prolog_flag(Item, V)  % our handler is just a system pred
+	    current_prolog_flag(Item, V)
+	    % our handler is just a system pred
 	).
 
 
