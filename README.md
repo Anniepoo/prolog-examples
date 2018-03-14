@@ -85,4 +85,4 @@ A little story analogy to help understand cut and cut, fail
  an imperative language.
 
 ### nqueens.pl
-Implementation of the generalized version of the classic 8-queens problem-
+Implementation of the generalized version of the classic 8-queens problem.
