@@ -135,8 +135,8 @@ Albany yard has 4 tracks. There are cars for trains A,B,C, and D.
 2 ACDCC
 1 BBBAAA
 
-The engine can take as many cars from the right as it wants and move them, in the same order, to 
-the right end of another track.
+The engine can take as many cars from the end as it wants and move them, in the same order, to 
+the end of another track.
 
 So, here's some moves that put all the B cars together.  We'll put them on track 1
 since there's some there already.
@@ -187,7 +187,7 @@ since there's some there already.
 
 note that this last move also helps make train A
 
-Make a program that prints out the best moves to sort out all the cars in the yard.
+Make a program that prints out moves to sort out all the cars in the yard.
 
 Test data:
 
@@ -217,7 +217,8 @@ Test data:
 
 ```
 
-Hint - it might be easier to consider the LEFT end the end you pull cars from.
+Hint - Prolog lists are easier to manipulate from the head end. Make the first car in the list be the car
+on the **right** in these diagrams.
 
 
 
