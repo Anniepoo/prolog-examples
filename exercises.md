@@ -17,7 +17,7 @@ X c_is 3+2i + 5+i1, X = 8+3i.
 X c_is 1+1i + (3+4i)*(3+4i). % X is near 25.70992 + 1.8063i
 3+1i c_is 1.5+1i + 1.5 .
 
-# 2) Case Based Reasoning (hard, open ended)
+# 2) Case Based Reasoning (very hard, open ended)
 
 Much of what humans do to think is reason by finding a similar past problem to the one we
 face, and reasoning by analogy.
@@ -28,47 +28,196 @@ and attempts to find similar ones in the present.
 Since we're unlikely to face exactly the same problem twice, we need to find matches that
 are 'sort of close'. 
 
-Let's say we're trying to predict the sentence for Bubba in this case: 
+As a baby version of this, let's take a bunch of sentences, and find ones that are 'like' each other.
 
-Arnie, quite intoxicated, was drinking at a bar when Bubba came in. They had a dispute over a woman.
-Arnie started 'making trouble' with Bubba, pushing him and uttering curses. Bubba tried to defuse the
-situation, but instead of leaving, insisted Arnie leave. Arnie hit Bubba with a pool cue. Bubba pulled a knife
-and stabbed Arnie in the chest. The ambulance took an usually long time to get there, and a doctor testified
-he might have lived if it had gotten there sooner.
-Arnie was 19 and had a juvenile record for methamphetamine possession.
-Bubba is 22 and has a conviction for illegal possession of a firearm and a DUI.
-Bubba is charged with voluntary manslaughter.
+assume we have sentences - case normalized, punctuation discarded.
 
-Here's another case.
+    [ i, went, to, the, ball, game ].
+    [ bob, had, sore, on, his, foot ].
+    [ carol, and, alice, went, to, welding, class ].
+    [ a, book, fell, from, the, shelf ].
+    [ alice, fell, from, the, roof ].
+    [ alice, has, a, cat ].
+    [ george, has, a, white, dog ].
+    [ george, went, to, a, sports, game ].
+    [ carol, went, over, to, the, cat ].
 
-Aaron (age32) and Bob (age 38) were business partners in a failing restaurant. 
-Bob arrived one night at the business to find Aaron quite intoxicated. They got into
-an argument. Aaron threatened to have Bob 'rubbed out by his mob friends'. 
-Bob, expecting trouble, had brought a gun. He shot Aaron in the arm, which he
-claimed he did to 'scare off' Aaron. The bullet richocheted off a bone and
-went through Aaron's chest, killing him instantly.
-Bob was charged with voluntary manslaughter, plead guilty, and received an 8 year prison sentence.
-Bob and Aaron were both under investigation as part of an organized crime investigation at
-the time of the incident. Bob later plead guilty to an extortion charge in connection with
-that investigation and received an additional 2 year sentence.
+and so on. This list is short, feel free to add your own set of test sentences. I strongly suggest using 
+a small vocabulary to keep the problem tractable. Your solution must work with new data, of course,
+not just with this fixed set, but you can assume the vocabulary won't increase (so "alice has a roof" is fair,
+but "ships enter the shipyard constantly" is not).
 
-And we know that the maximum for voluntary manslaughter in California is an 11 year sentence.
+If you want to be able to enter sentences in normal form, the pack (packs are SWI-Prolog's equivilent of gems) [http://www.swi-prolog.org/pack/list?p=tokenize](tokenize) would be an easy way of getting tha above form from your string.
 
-(By the way, I am not a lawyer, this is all made up data).
+Find matches that are 'sort of close'. Note there's no right answer to this. "A book fell from the shelf."
+and "Alice fell from the roof.", are those closer than "Alice has cat" and "Carol went to the cat."?
 
-It has some things that are irrelevant (names of parties, it happened at night).
-Some things are the same (same charge).
-Some things are 'kind of' the same (both victims menaced their killers,
-but Arnie actually attacked Bubba, while Bob only threatened to have Aaron killed).
-Some things are numeric, but are still 'kind of' the same (Aaron and Bob are adults, they
-can't claim their age is a factor - while Arnie and Bubba seem young enough to be 'reformable'.
+Here are some ways to approach the problem:
 
-(Note, this is unfinished, I'll finish later).
+Make a hierarchy of things. Bob and Carol are people, people are things.
+Make substitutions for more general things. So [a_person, fell, from, a_place]
+should each thing be in a single class, like Java class inheritence, or in
+many classes, like properties - cadillacs are cars, but also possessions, steel things,
+drivable things, etc?
 
+Make as many substitutions as you need to in order to make the sentences match.
 
+A problem with this approach is that everything ends up matching everything after you've reached
+the top of the hierarchy.  Try putting costs in your hierarchy, and give the matcher a 'budget',
+and 'charge' to ascend the hierarchy. Or just omit the very top of the hierarchy.
 
+A comment - large data sets of such hierarchies are available. If using this technique "for real" a
+corpus like [https://wordnet.princeton.edu/](wordnet) is invaluable. If you want to play with your
+solution and wordnet, a prolog version of wordnet is available from the same site.
 
+A second approach is to rewrite parts of the sentence into simpler forms. "welding class" can
+become just "class", or even `welding_class`. Adjectives add information, but aren't necessary. Definitely, you should
+discard articles like "a" and "the". Prepositions like "to" in "to the cat"
 
+Look up _Levenshtein distance_ . It can be applied treating each word as a letter. Levenshtein distance
+is a relatively low computation way to find probable matches to work on later.
+
+This problem is a 'toy' version of a problem that has consumed entire research careers. It has no perfect
+answer (if you build a perfect solution to this problem, please contact the author!).
+
+# 3) Ugraphs format (moderate, using library)
+
+Given a knowledgebase of graph vertices and edges (contained in file graph_data.pl)
+
+Figure out if the graph is _bipartite_. If you divide the vertices into two disjoint sets (say color them red
+or blue), and there is a coloring such that every edge is between vertices of different colors, the graph
+is bipartite.
+
+You are explicitly encouraged to use the library [http://www.swi-prolog.org/pldoc/man?section=ugraphs](ugraphs)
+
+# 4) Bipartite graphs (hard, good with #3, list manipulation)
+
+Bipartite graphs are useful for assignment of resources problems.
+
+take the bipartite graphs from #1 and assume that vertex 1, and all vertices the same color as 1, are resources,
+like an industrial machine, and the other color vertices are jobs to be done. So maybe job 4 can be done
+on machine 2 or machine 4.
+
+Make a predicate that assigns one job to each resource.
+
+# 5) Vocabulary (easy, lists, aggregates)
+
+It would be convenient to have a list of words used in the data of problem 2.
+
+Take the data from problem 2 and make a sorted list of all the words, with each word used once.
+
+# 6) Choo Choo!  (moderate, lists)
+
+The Hooterville railroad has a single track thar runs from Albany to Folsom. Here's the stations, and 
+distances (in minutes travel) between them.
+
+Albany - 25 - Baker - 10 - Carlson - 45 - Dexter - 10 - Eugene - 15 - Folsom. 
+
+Trains coming from opposite directions can only pass at stations.
+
+Once an hour a train starts from each end.
+
+Write a simulator that 'runs' the trains.   Between each station, randomly add up to 50% time
+to the nominal travel time. If the trains meet other than at a station, they crash.
+
+Write a second module that can instruct trains to hold at stations until they meet another train.  
+This module should be 'told' only the time and station name last passed. 
+This module should prevent crashes, while minimizing time trains spend waiting.
+
+# 7) Choo choo switching (moderate, lists)
+
+Railroad yards have a number of tracks. The yard is the 'sorter' for cars. 
+
+Albany yard has 4 tracks. There are cars for trains A,B,C, and D.
+
+4 ABBAACCD
+3 BACDAB
+2 ACDCC
+1 BBBAAA
+
+The engine can take as many cars from the right as it wants and move them, in the same order, to 
+the right end of another track.
+
+So, here's some moves that put all the B cars together.  We'll put them on track 1
+since there's some there already.
+
+```
+
+1. move the A cars out of the way on track 2
+
+4 ABBAACCD
+3 BACDAB
+2 ACDCCAAA
+1 BBB
+
+2. move all the cars from 3 to 1
+
+4 ABBAACCD
+3 
+2 ACDCCAAA
+1 BBBBACDAB
+
+3. move cars ACDAB back to 3
+
+4 ABBAACCD
+3 ACDAB
+2 ACDCCAAA
+1 BBBB
+
+4. move all but one car from 4 to 3
+
+4 A
+3 ACDABBBAACCD
+2 ACDCCAAA
+1 BBBB
+
+5. move BBBAACCD from 3 to 1
+
+4 A
+3 ACDA
+2 ACDCCAAA
+1 BBBBBBBAACCD
+
+6. move AACCD from 1 to 2
+
+4 A
+3 ACDA
+2 ACDCCAAAAACCD
+1 BBBBBBB
+
+note that this last move also helps make train A
+
+Make a program that prints out the best moves to sort out all the cars in the yard.
+
+Test data:
+
+[`abcdbababaaacccd`,
+ `abcdaaabbbddddd`,
+ ``,
+ `aaaaaaabbbbbbbb`
+]
+
+[`bbbbbbcccdddd`,
+`aaaaabbbbb`,
+`aaaaaabbb`,
+`abcdd`
+]
+
+[ ``,
+``,
+`aa`,
+``
+]
+
+[`abbddaa`,
+`ddccc`,
+`cccaaa`,
+`ccdab`
+]
+
+```
+
+Hint - it might be easier to consider the LEFT end the end you pull cars from.
 
 
 
