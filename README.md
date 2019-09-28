@@ -22,11 +22,11 @@ It now feels very 'imperative'
 ### talespin2.pl
 
 Implementation of a classic story generator
+(note that a far better implementation is at https://github.com/SWI-Prolog-Education/talespin-annie)
 
 ### tictactoe.pl
 
 Implementation of tic tac toe
-
 
 ### birds.pl
 
@@ -86,3 +86,9 @@ A little story analogy to help understand cut and cut, fail
 
 ### nqueens.pl
 Implementation of the generalized version of the classic 8-queens problem.
+
+### techtree2.pl
+
+solve game 'tech tree' problems using CHR.
+
+
