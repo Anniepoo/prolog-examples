@@ -3,12 +3,12 @@
 :-use_module(library(clpfd)).
 
 go(M) :-
-    wsc([[0,0,0,0]], M),
+    wsc(0,0,0,0, M),
     flatten(M, FM),
     label(FM).
 
-wsc([[1,1,1,1]|R], [[1,1,1,1]|R]).
-wsc([[F,W,S,C]|R], M) :-
+wsc(1,1,1,1, []).
+wsc(F,W,S,C, [NM | R]) :-
     [NF, NW, NS, NC] = NM,
     NM ins 0..1,
     NF #\= F, % move the farmer
@@ -19,5 +19,5 @@ wsc([[F,W,S,C]|R], M) :-
     % game rules
     NS #= NC #==> NF #= NS,
     NW #= NS #==> NF #= NW,
-    wsc([NM, [F,W,S,C] | R], M).
+    wsc(NF, NW, NS, NC, R).
 
