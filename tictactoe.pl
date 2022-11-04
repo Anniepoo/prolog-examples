@@ -10,24 +10,25 @@
 '
 */
 /* a little wrapper to make starting a game convenient */
-tictactoe :- game([b,b,b,b,b,b,b,b,b], x).
+tictactoe :- write('Enter 1..9 at > to make a move.'),nl,game([b,b,b,b,b,b,b,b,b], x).
 
 /* the core recursive call to play the game */
-game(Board , _) :- win(x, Board),write('you win!').
-game(Board , _) :- win(o, Board),write('I win!').
+game(Board , _) :- win(x, Board),showBoard(Board),write('You win!'),nl.
+game(Board , _) :- win(o, Board),showBoard(Board),write('I win!'),nl.
 game(Board , _) :- cat(Board).   /* no more moves - not technically cat */
 game(Board , x) :- moveUser(Board , NewBoard) , game(NewBoard , o).
 game(Board , o) :- moveComputer(Board , NewBoard), game(NewBoard , x).
 
-moveUser(Board , NewBoard) :- showBoard(Board), put('*'),get_char(Y), get_char(_), name(Y , [X]),
+moveUser(Board , NewBoard) :- showBoard(Board), put('>'),get_char(Y), get_char(_), name(Y , [X]),
     Loc is X - 48, !,procUserMove(Loc,Board,NewBoard).
 
 procUserMove(Loc,Board,NewBoard) :- Loc > 0, Loc < 10, playAt(x , Loc , Board , NewBoard).
 /* this handles the invalid case */
-procUserMove(_,Board,_) :- write('invalid move'),!, game(Board,x).
+procUserMove(_,Board,_) :- write('Invalid move, try again.'),nl,!, game(Board,x).
 
 /* lists must be same length tim- these were getting triggered, how?
-playAt(_ , _ , [_|_] , []) :- !,fail.
+```````````````````````````````````````````````````playAt(_ , _ , [_|_] , []) :-
+!,fail.
 playAt(_ , _ , [] , [_|_]) :- !,fail. */
 playAt(Player , 1 , [b|Tail] , [Player|Tail]).
 playAt(Player , Loc , [H|TBoard] , [H|TNewBoard]) :-
@@ -35,10 +36,15 @@ playAt(Player , Loc , [H|TBoard] , [H|TNewBoard]) :-
    M is Loc - 1 ,
    playAt(Player , M , TBoard , TNewBoard).
 
+%showBoard([]).
+%showBoard([H|T]) :- put(H),showBoard1(T).
+%showBoard1([H|T]) :- put(H),showBoard2(T).
+%showBoard2([H|T]) :- put(H),nl,showBoard(T),nl.
 showBoard([]).
-showBoard([H|T]) :- put(H),showBoard1(T).
-showBoard1([H|T]) :- put(H),showBoard2(T).
-showBoard2([H|T]) :- put(H),nl,showBoard(T).
+showBoard([A,B,C|T]) :- put(A),put(B),put(C),nl,showBoard1(T). %vp change
+showBoard1([A,B,C|T]) :-  put(A),put(B),put(C),nl,showBoard2(T). %vp change
+showBoard2([A,B,C|T]) :-  put(A),put(B),put(C),nl,showBoard(T). %vp change
+
 
 win(A , [A,A,A,_,_,_,_,_,_]).
 win(A , [_,_,_,A,A,A,_,_,_]).
